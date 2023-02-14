@@ -2,10 +2,9 @@
 
     require_once __DIR__.'../../vendor/autoload.php';
     use Dotenv\Dotenv;
-    use Models\Ponente;
-    use Lib\ResponseHttp;
     use Lib\Router;
     use Controllers\ApiponenteController;
+    use Controllers\UsuarioController;
 
 
     $dotenv = Dotenv::createImmutable(__DIR__);
@@ -43,6 +42,11 @@
     //Ruta para borrar ponente
     Router::add('DELETE','ponente/borrar/:id',function(int $ponenteid){
         (new ApiponenteController())->borrarPonente($ponenteid);
+    });
+
+    //Ruta para registrar usuario
+    Router::add('POST','usuario/registro',function(){
+        (new UsuarioController())->registrarUsuario();
     });
 
     
