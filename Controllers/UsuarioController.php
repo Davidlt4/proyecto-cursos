@@ -50,8 +50,9 @@
 
                 $usuario=new Usuario();
                 $usuario_datos=json_decode(file_get_contents("php://input"));
+                //var_dump($usuario->validarDatos($usuario_datos));die;
 
-                if($usuario->validarDatos($usuario_datos)){
+                if(gettype($usuario->validarDatos($usuario_datos))=="boolean"){
 
                     $password_segura = Security::encriptaPassw($usuario_datos->password);
 
@@ -72,7 +73,7 @@
 
                 }else{
                     http_response_code(404);
-                    $result=json_decode(ResponseHttp::statusMessage(404,"Error al validar los datos"));
+                    $result=json_decode(ResponseHttp::statusMessage(404,$usuario->validarDatos($usuario_datos)));
                 }
 
 

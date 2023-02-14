@@ -122,11 +122,12 @@
         }
 
         //para comprobar si el correo del usuario ya existe
-        public function existe(array $usuario):bool{
+        public function existe($email):bool{
             
+
             $sql = ("SELECT email FROM usuarios WHERE email = :email");
             $consulta = $this -> prepara($sql);
-            $consulta -> bindParam(':email',$usuario['email']);
+            $consulta -> bindParam(':email',$email);
 
             try{
                 $consulta->execute();
@@ -136,20 +137,53 @@
                     $result=false;
                 }
             }catch(PDOException $err){
-                $result = false;
+                return false;
             }
+
             return $result;
 
         }
 
-        //Función  para comprobar si todos los datos son validos
-        public function validarDatos($datos_usuario):bool{
+        //validación de datos
+        public function validaCampos($usuario_datos):bool|string{
 
-            if(!empty($datos_usuario->nombre) && !empty($datos_usuario->apellidos) && !empty($datos_usuario->email) && !empty($datos_usuario->password) && !empty($datos_usuario->rol && !empty($datos_usuario->confirmado))){
-                return true;
+            if(!preg_match("/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/",$usuario_datos->email)){
+                return "Correo no válido";
+            }
+            if(!preg_match("/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]{3,16}$/",$usuario_datos->nombre)){
+                return "Solo pueden introducirse letras y espacios para el nombre";
+            }
+            if(!preg_match("/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]{3,16}$/",$usuario_datos->apellidos)){
+                return "Solo pueden introducirse letras y espacios para los apellidos";
+            }
+            if(!preg_match("/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,14}$/",$usuario_datos->password)){
+                return "La contrasena debe medir entre 6 y 14 caracteres, al menos tener un numero, al menos una minuscula y al menos una mayuscula";
+            }
+            if(!($usuario_datos->rol=="user" || $usuario_datos->rol=="admin")){
+                return "El rol solo puede ser User o Admin";
+            }
+            return true;
+        }
+
+        //Función  para comprobar si todos los datos son validos
+        public function validarDatos($usuario_datos):bool|string{
+
+            if(!empty($usuario_datos->nombre) && !empty($usuario_datos->apellidos) && !empty($usuario_datos->email) && !empty($usuario_datos->password) && !empty($usuario_datos->rol && !empty($usuario_datos->confirmado))){
+
+                $valida_campo=$this->validaCampos($usuario_datos);
+                $existe=$this->existe($usuario_datos->email);
+
+                if($existe){
+                    return "Este correo ya existe";
+                }
+                if(gettype($valida_campo)!="boolean"){
+                    return $valida_campo;
+                }
             }else{
                 return false;
             }
+
+            return true;
 
         }
 
