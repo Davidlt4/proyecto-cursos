@@ -125,7 +125,7 @@
         public function existe(array $usuario):bool{
             
             $sql = ("SELECT email FROM usuarios WHERE email = :email");
-            $consulta = $this -> conexion -> prepara($sql);
+            $consulta = $this -> prepara($sql);
             $consulta -> bindParam(':email',$usuario['email']);
 
             try{
