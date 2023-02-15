@@ -49,6 +49,11 @@
         (new UsuarioController())->registrarUsuario();
     });
 
+    //Ruta para logear usuario
+    Router::add('POST','usuario/login',function(){
+        (new UsuarioController())->login();
+    });
+
     
     Router::dispatch();
 

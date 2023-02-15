@@ -25,7 +25,6 @@
                 return true;
             }
             else {
-                echo "contraseña incorrecta";
                 return false;
             }
         }

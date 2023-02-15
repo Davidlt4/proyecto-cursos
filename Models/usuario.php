@@ -6,7 +6,7 @@
     use PDO;
     use PDOException;
     use Lib\BaseDatos;
-
+use Lib\Security;
 
     class Usuario extends BaseDatos{
 
@@ -144,7 +144,7 @@
 
         }
 
-        //validación de datos
+        //validación de datos pora el registro
         public function validaCampos($usuario_datos):bool|string{
 
             if(!preg_match("/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/",$usuario_datos->email)){
@@ -180,13 +180,33 @@
                     return $valida_campo;
                 }
             }else{
-                return false;
+                return "Rellena todo los campos: nombre,apellidos,email,password,rol y confirmado";
             }
 
             return true;
 
         }
 
+        //Función para validar datos del login
+        public function validarDatosLogin($usuario_datos):bool|string{
+
+            if(!empty($usuario_datos->email) && !empty($usuario_datos->password)){
+
+                if(!preg_match("/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/",$usuario_datos->email)){
+                    return "Correo no valido";
+                }
+
+            }else{
+                return "Introduce email y password";
+            }
+
+            return true;
+
+        }
+
+
+
+        //Función para registrar a un Usuario
         public function registra(){
 
             $statement = $this->prepara("INSERT INTO usuarios (nombre, apellidos, email, password, rol,confirmado) values (:nombre, :apellidos, :email,:password,:rol,:confirmado)");
@@ -208,11 +228,53 @@
         
         }
 
-    /*
-    public function login($datos):bool{
+        //función auxiliar para login
 
-       
-    }*/
+        public function buscaMail($email):bool|object{
+
+            $result= false;
+            
+            $cons= $this->prepara("SELECT * FROM usuarios WHERE email= :email");
+            $cons->bindParam(':email',$email, PDO::PARAM_STR);
+
+            try {
+                $cons->execute();
+                if ($cons && $cons->rowCount() >= 1) {
+                    $result= $cons->fetch(PDO::FETCH_OBJ);
+                }
+            }
+            catch(PDOEXception $err) {
+                $result= false;
+            }
+
+            return $result;
+        }
+
+        //función para comprobar el login de un usuario
+        public function login($usuario_datos):bool|string{
+
+            $email= $usuario_datos->email;
+            $password= $usuario_datos->password;
+
+            $usuario=$this->buscaMail($email);
+
+            if($usuario!==false){
+
+                $verify=Security::validaPassw($password,$usuario->password);
+
+                if ($verify) {
+                    return true;
+                }else{
+                    return "Contrasena incorrecta";
+                }
+
+            }else{
+                return "Este correo no existe";
+            }
+
+            
+        
+        }
 
 
 }
