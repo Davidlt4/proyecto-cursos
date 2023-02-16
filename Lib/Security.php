@@ -10,6 +10,7 @@
     class Security{
 
         final public static function clavesecreta(){
+            
             $dotenv=Dotenv::createImmutable(dirname(__DIR__.'/'));
             $dotenv->load();
             return $_ENV['SECRET_KEY'];
