@@ -7,6 +7,7 @@
     use Lib\ResponseHttp;
     use Lib\Pages;
     use Lib\Security;
+    use Firebase\JWT\JWT;
 
     class UsuarioController{
 
@@ -72,8 +73,12 @@
                 if(gettype($usuario->validarDatosLogin($usuario_datos))=="boolean"){
 
                     if(gettype($usuario->login($usuario_datos))=="boolean"){
+
+                        $usuario->setEmail($usuario_datos->email);
+                        $this->crearToken($usuario,$usuario_datos->email);
                         http_response_code(200);
-                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente"));
+                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente",$usuario->getToken()));
+
                     }else{
                         http_response_code(404);
                         $result=json_decode(ResponseHttp::statusMessage(404,$usuario->login($usuario_datos)));
@@ -91,6 +96,18 @@
             }
 
             $this->pages->render("read",['result'=> json_encode($result)]);
+
+        }
+
+        public function crearToken($usuario,$email){
+
+            $clave=Security::clavesecreta();
+            $token=Security::crearToken($clave,[$email]);
+            $token_seguro=JWT::encode($token,$clave,'HS256');
+            $usuario->setToken($token_seguro);
+            $usuario->guardaToken($token["exp"]);
+
+            return $token_seguro;
 
         }
 

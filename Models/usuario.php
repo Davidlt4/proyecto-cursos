@@ -276,6 +276,26 @@ use Lib\Security;
         
         }
 
+        public function guardaToken($fechaExp){
+
+            $statement=$this->prepara("UPDATE usuarios SET token=:token,token_exp=:token_exp WHERE email=:email");
+            
+            $statement->bindParam(":token",$this->token,PDO::PARAM_STR);
+
+            $statement->bindParam(":email",$this->email,PDO::PARAM_STR);
+
+            $statement->bindParam(":token_exp",$fechaExp,PDO::PARAM_STR);
+
+            try{
+                $statement->execute();
+                $result = true;
+            }catch(PDOException $err){
+                $result = false;
+            }
+            return $result;
+
+        }
+
 
 }
 ?>
