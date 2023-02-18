@@ -54,7 +54,11 @@
             return $response['message']= json_encode(ResponseHttp::statusMessage(401,'Token expirado o invalido'));
            }
         }
-           
+          
+        public static function validarToken(): bool|array{
+            $info= self::getToken();
+            return $info->data ?? false;
+        }
 
 
 

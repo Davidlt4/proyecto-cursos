@@ -77,7 +77,7 @@
                         $usuario->setEmail($usuario_datos->email);
                         $this->crearToken($usuario,$usuario_datos->email);
                         http_response_code(200);
-                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente",$usuario->getToken()));
+                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente, token:  ".$usuario->getToken()));
 
                     }else{
                         http_response_code(404);

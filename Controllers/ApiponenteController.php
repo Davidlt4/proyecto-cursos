@@ -5,11 +5,14 @@
     use Models\Ponente;
     use Lib\ResponseHttp;
     use Lib\Pages;
+    use Lib\Security;
+use Models\Usuario;
 
     class ApiponenteController{
 
         private Pages $pages;
         private Ponente $ponente;
+        private Usuario $usuario;
 
 
         public function __construct()
@@ -17,32 +20,54 @@
             ResponseHttp::setHeaders();
             $this -> ponente = new Ponente();
             $this -> pages = new Pages();
+            $this->usuario = new Usuario();
+
         }
 
 
         public function getAll(){
-            $ponentes = $this -> ponente->findAll();
-            $PonenteArr = [];
-            if(!empty($ponentes)){
-                $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(202,'OK'));
-                $PonenteArr["Ponentes"] = [];
-                foreach($ponentes as $fila){
-                    $PonenteArr["Ponentes"][] = $fila;
+
+            if($_SERVER['REQUEST_METHOD']=='GET'){
+
+                $tokenDatos=Security::validarToken();
+
+                if($tokenDatos !== false && $this->usuario->buscaMail($tokenDatos[0])){
+
+                    $ponentes = $this -> ponente->findAll();
+                    $PonenteArr = [];
+
+                    if(!empty($ponentes)){
+
+                        $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(202,'OK'));
+                        $PonenteArr["Ponentes"] = [];
+                        foreach($ponentes as $fila){
+                            $PonenteArr["Ponentes"][] = $fila;
+                        }
+
+                    }else{
+                        $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(400, 'No hay ponentes'));
+                        $PonenteArr["Ponentes"] = [];
+                    }
+                    if($PonenteArr==[]){
+                        $result = json_encode(ResponseHttp::statusMessage(400,'No hay ponentes'));
+                    }else{
+                        $result = json_encode($PonenteArr);
+                    }
+
+                }else{
+                    $result=json_decode(ResponseHttp::statusMessage(404,"No autentificado"));
+                    $result=$result->message;
                 }
             }else{
-                $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(400, 'No hay ponentes'));
-                $PonenteArr["Ponentes"] = [];
+                $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser GET"));
             }
-            if($PonenteArr==[]){
-                $response = json_encode(ResponseHttp::statusMessage(400,'No hay ponentes'));
-            }else{
-                $response = json_encode($PonenteArr);
-            }
-            $this -> pages -> render('read',['response' => $response]);
+
+            $this -> pages ->render('read',['result' => $result]);
             
         }
 
         public function getPonente($ponenteid){
+
             $ponentes = $this -> ponente->findOne($ponenteid);
             $PonenteArr = [];
             if(!empty($ponentes)){
@@ -56,11 +81,11 @@
                 $PonenteArr["Ponentes"] = [];
             }
             if($PonenteArr==[]){
-                $response = json_encode(ResponseHttp::statusMessage(400,'No hay ponentes'));
+                $result = json_encode(ResponseHttp::statusMessage(400,'No hay ponentes'));
             }else{
-                $response = json_encode($PonenteArr);
+                $result = json_encode($PonenteArr);
             }
-            $this -> pages -> render('read',['response' => $response]);
+            $this -> pages -> render('read',['result' => $result]);
         }
 
 
@@ -70,9 +95,9 @@
 
                 $ponente=new Ponente();
                 $datos_ponente=json_decode(file_get_contents("php://input"));
+                
 
                 if($ponente->validarDatos($datos_ponente)){
-
 
                     $ponente->setNombre($datos_ponente->nombre);
                     $ponente->setApellidos($datos_ponente->apellidos);
