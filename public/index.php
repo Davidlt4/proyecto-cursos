@@ -9,10 +9,6 @@
 
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->safeLoad();
-
-    http_response_code(202);
-    $array = ["estado" => '202', "mensaje" => 'Estamos en el index principal'];
-    echo json_encode($array);
     
     //echo ResponseHttp::statusMessage(404,'La página de ponentes no existe');
 
@@ -37,7 +33,6 @@
     Router::add('PUT','ponente/actualizar/:id',function(int $ponenteid){
         (new ApiponenteController())->actualizaPonente($ponenteid);
     });
-
     
     //Ruta para borrar ponente
     Router::add('DELETE','ponente/borrar/:id',function(int $ponenteid){
