@@ -5,6 +5,7 @@
     use Lib\Router;
     use Controllers\ApiponenteController;
     use Controllers\NorUsuarioController;
+    use Controllers\PonenteController;
     use Controllers\UsuarioController;
 
 
@@ -17,9 +18,9 @@
 
     Router::add('GET','auth',function(){require '../views/auth.php';});
 
-    Router::add('GET','ponente',function(){
+    /*Router::add('GET','ponente',function(){
         (new ApiponenteController()) -> getAll();
-    });
+    });*/
 
     Router::add('GET','ponente/:id',function(int $ponenteid){
          (new ApiponenteController()) -> getPonente($ponenteid);
@@ -36,13 +37,13 @@
     });
     
     //Ruta para borrar ponente
-    Router::add('DELETE','ponente/borrar/:id',function(int $ponenteid){
+    Router::add('GET','ponente/borrar/:id',function(int $ponenteid){
         (new ApiponenteController())->borrarPonente($ponenteid);
     });
 
     //Ruta para registrar usuario
     Router::add('POST','usuario/registro',function(){
-        (new UsuarioController())->registrarUsuario();
+        (new NorUsuarioController())->registro();
     });
 
     //Ruta para logear usuario
@@ -52,6 +53,10 @@
 
     Router::add('GET','/',function(){
         (new NorUsuarioController())->login();
+    });
+
+    Router::add('GET','ponentes',function(){
+        (new PonenteController())->mostrar();
     });
 
     

@@ -17,11 +17,9 @@ use Models\Usuario;
 
         public function __construct()
         {
-            ResponseHttp::setHeaders();
             $this -> ponente = new Ponente();
             $this -> pages = new Pages();
             $this->usuario = new Usuario();
-
         }
 
 
@@ -96,7 +94,7 @@ use Models\Usuario;
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser GET"));
             }
 
-            $this -> pages ->render('read',['result' => $result]);
+           return $result;
             
         }
 
@@ -210,7 +208,7 @@ use Models\Usuario;
 
     public function borrarPonente($ponenteid){
 
-        if($_SERVER['REQUEST_METHOD']=='DELETE'){
+        if($_SERVER['REQUEST_METHOD']=='GET'){
 
             $ponente=new Ponente();
             if($ponente->borrar($ponenteid)){

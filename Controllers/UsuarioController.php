@@ -21,12 +21,15 @@
             $this -> pages = new Pages();
         }
 
-        public function registrarUsuario(){
+        public function registrarUsuario($usuario_datos){
+
+            var_dump($usuario_datos);
+            var_dump($usuario_datos->nombre);
+            die;
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $usuario=new Usuario();
-                $usuario_datos=json_decode(file_get_contents("php://input"));
         
                 if(gettype($usuario->validarDatos($usuario_datos))=="boolean"){
 

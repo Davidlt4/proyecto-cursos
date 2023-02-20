@@ -37,7 +37,7 @@ class Router {
             
             $param = $match[0];
             $param =preg_replace("/\//",'',$param);
-            if($param!=="login" && $param!=="registro" && $param!=="crear" && $param!=="ponente"){
+            if($param!=="login" && $param!=="registro" && $param!=="crear" && $param!=="ponentes"){
                 $action=preg_replace('/'.$match[0].'/',':id',$action);//quitamos la primera parte que se repite siempre (clinicarouter)
             }
         }

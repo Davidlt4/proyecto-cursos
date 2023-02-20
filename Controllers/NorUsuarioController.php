@@ -28,6 +28,12 @@
 
         public function registro(){
 
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                $datos=$_POST['data'];
+                $this->api->registrarUsuario($datos);
+            }
+
+            $this->pages->render("usuario/registro");
         }
 
 
