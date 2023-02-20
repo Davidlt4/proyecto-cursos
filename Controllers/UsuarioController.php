@@ -23,13 +23,11 @@
 
         public function registrarUsuario($usuario_datos){
 
-            var_dump($usuario_datos);
-            var_dump($usuario_datos->nombre);
-            die;
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $usuario=new Usuario();
+                $usuario_datos=json_decode($usuario_datos);
         
                 if(gettype($usuario->validarDatos($usuario_datos))=="boolean"){
 

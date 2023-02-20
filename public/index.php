@@ -46,6 +46,10 @@
         (new NorUsuarioController())->registro();
     });
 
+    Router::add('GET','usuario/registro',function(){
+        (new NorUsuarioController())->registro();
+    });
+
     //Ruta para logear usuario
     Router::add('POST','usuario/login',function(){
         (new NorUsuarioController())->login();

@@ -29,7 +29,7 @@
         public function registro(){
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
-                $datos=$_POST['data'];
+                $datos=json_encode($_POST['data']);
                 $this->api->registrarUsuario($datos);
             }
 

@@ -7,7 +7,7 @@
     <title>Registro</title>
 </head>
 <body>
-    <form action="" method="POST">
+    <form action="<?=$_ENV['BASE_URL']?>usuario/registro" method="POST">
 
         <label>Nombre: </label>
         <input type="text" name="data[nombre]"><br><br>
@@ -21,8 +21,7 @@
         <label>Contraseña: </label>
         <input type="password" name="data[password]">
 
-        <input type="hidden" value="alumno" name="data[rol]">
-        <input type="hidden" value="si" name="data[confirmado]">
+        <input type="submit">
 
 
 
