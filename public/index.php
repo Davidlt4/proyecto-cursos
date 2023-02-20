@@ -4,6 +4,7 @@
     use Dotenv\Dotenv;
     use Lib\Router;
     use Controllers\ApiponenteController;
+    use Controllers\NorUsuarioController;
     use Controllers\UsuarioController;
 
 
@@ -46,7 +47,11 @@
 
     //Ruta para logear usuario
     Router::add('POST','usuario/login',function(){
-        (new UsuarioController())->login();
+        (new NorUsuarioController())->login();
+    });
+
+    Router::add('GET','/',function(){
+        (new NorUsuarioController())->login();
     });
 
     

@@ -25,7 +25,7 @@ use Models\Usuario;
         }
 
 
-        public function getAll(){
+        /*public function getAll(){
 
             if($_SERVER['REQUEST_METHOD']=='GET'){
 
@@ -58,6 +58,40 @@ use Models\Usuario;
                     $result=json_decode(ResponseHttp::statusMessage(404,"No autentificado"));
                     $result=$result->message;
                 }
+            }else{
+                $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser GET"));
+            }
+
+            $this -> pages ->render('read',['result' => $result]);
+            
+        }*/
+
+        public function getAll(){
+
+            if($_SERVER['REQUEST_METHOD']=='GET'){ 
+
+                $ponentes = $this -> ponente->findAll();
+                $PonenteArr = [];
+
+                if(!empty($ponentes)){
+
+                    $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(202,'OK'));
+                    $PonenteArr["Ponentes"] = [];
+                    foreach($ponentes as $fila){
+                        $PonenteArr["Ponentes"][] = $fila;
+                    }
+
+                }else{
+                    $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(400, 'No hay ponentes'));
+                    $PonenteArr["Ponentes"] = [];
+                }
+                if($PonenteArr==[]){
+                    $result = json_encode(ResponseHttp::statusMessage(400,'No hay ponentes'));
+                }else{
+                    $result = json_encode($PonenteArr);
+                }
+
+                
             }else{
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser GET"));
             }

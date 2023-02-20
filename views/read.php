@@ -1,5 +1,5 @@
 <?php 
 
-
-echo $result;
+echo "Hola mundo";
+//echo $result;
 

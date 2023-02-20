@@ -12,19 +12,6 @@
             $this->api=new ApiponenteController();
         }
 
-        public function login(){
-
-            if($_SERVER['REQUEST_METHOD']=='POST'){
-
-            }
-            
-            
-        }
-
-        public function registro(){
-
-        }
-
 
     }
 

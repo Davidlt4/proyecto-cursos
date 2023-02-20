@@ -17,7 +17,6 @@
 
         public function __construct()
         {
-            ResponseHttp::setHeaders();
             $this -> usuario = new Usuario();
             $this -> pages = new Pages();
         }
@@ -63,12 +62,11 @@
 
         }
 
-        public function login(){
+        public function login($usuario_datos){
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $usuario=new Usuario();
-                $usuario_datos=json_decode(file_get_contents("php://input"));
         
                 if(gettype($usuario->validarDatosLogin($usuario_datos))=="boolean"){
 
@@ -95,7 +93,7 @@
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser POST"));
             }
 
-            $this->pages->render("read",['result'=> json_encode($result)]);
+            return json_encode($result);
 
         }
 

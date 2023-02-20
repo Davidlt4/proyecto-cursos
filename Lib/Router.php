@@ -20,6 +20,7 @@ class Router {
     // usando call_user_func()
 
     public static function dispatch():void {
+
         $method = $_SERVER['REQUEST_METHOD']; 
 
         //$action = preg_replace("/\/proyectocursos\//",'',$_SERVER['REQUEST_URI']); //Desde el index raiz
@@ -50,7 +51,7 @@ class Router {
         }else {
            //header('Location: /404');
             //header("HTTP/1.1 404 Not Found");
-            echo ResponseHttp::statusMessage(404,'Pagina no encontrada');
+            echo "Pagina no encontrada";
           
         }
 
