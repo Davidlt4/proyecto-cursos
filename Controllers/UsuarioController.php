@@ -37,8 +37,8 @@
                     $usuario->setApellidos($usuario_datos->apellidos);
                     $usuario->setEmail($usuario_datos->email);
                     $usuario->setPassword($password_segura);
-                    $usuario->setRol($usuario_datos->rol);
-                    $usuario->setConfirmado($usuario_datos->confirmado);
+                    $usuario->setRol("alumno");
+                    $usuario->setConfirmado("no");
 
                     if($usuario->registra()){
                         http_response_code(200);

@@ -159,16 +159,14 @@ use Lib\Security;
             if(!preg_match("/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,14}$/",$usuario_datos->password)){
                 return "La contrasena debe medir entre 6 y 14 caracteres, al menos tener un numero, al menos una minuscula y al menos una mayuscula";
             }
-            if(!($usuario_datos->rol=="user" || $usuario_datos->rol=="admin")){
-                return "El rol solo puede ser User o Admin";
-            }
+            
             return true;
         }
 
         //Función  para comprobar si todos los datos son validos
         public function validarDatos($usuario_datos):bool|string{
 
-            if(!empty($usuario_datos->nombre) && !empty($usuario_datos->apellidos) && !empty($usuario_datos->email) && !empty($usuario_datos->password) && !empty($usuario_datos->rol && !empty($usuario_datos->confirmado))){
+            if(!empty($usuario_datos->nombre) && !empty($usuario_datos->apellidos) && !empty($usuario_datos->email) && !empty($usuario_datos->password)){
 
                 $valida_campo=$this->validaCampos($usuario_datos);
                 $existe=$this->existe($usuario_datos->email);
