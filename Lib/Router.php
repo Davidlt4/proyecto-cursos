@@ -29,14 +29,16 @@ class Router {
 
 
         $param = null;
-        $p= preg_match('/[0-9]+$/', $action, $match);
+        $p= preg_match('/[a-z0-9A-Z.\-_]+$/', $action, $match);
 
        
         if(!empty($match)){
             
             $param = $match[0];
-
-            $action=preg_replace('/'.$match[0].'/',':id',$action);//quitamos la primera parte que se repite siempre (clinicarouter)
+            $param =preg_replace("/\//",'',$param);
+            if($param!=="login" && $param!=="registro" && $param!=="crear" && $param!=="ponente"){
+                $action=preg_replace('/'.$match[0].'/',':id',$action);//quitamos la primera parte que se repite siempre (clinicarouter)
+            }
         }
 
           $fn = self::$routes[$method][$action] ?? null;
