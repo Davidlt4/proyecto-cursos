@@ -1,5 +1,12 @@
+html{
+    margin: 0;
+    height: 100%;
+    width: 100vw;
+}
+
 body{
     margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 h1{
     margin: 0;
@@ -8,10 +15,9 @@ h1{
 }
 
 header{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin: 0;
     margin-bottom: 40px;
-    background-color: orangered;
+    background-color:cornflowerblue;
     padding: 10px;
 }
 
@@ -38,6 +44,15 @@ fieldset{
     margin: auto;
     width: 60%;
     padding: 10px;
+    background-color:cornflowerblue;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+legend{
+    font-size: 25px;
+    color: white;
+    -webkit-text-stroke: 1.5px black;
 }
 
 table {
@@ -46,10 +61,36 @@ table {
     margin: auto;
 }
 
+table thead{
+    background-color:cornflowerblue;
+    color: white;
+}
+
+table tbody{
+    font-weight: bold;
+}
+
 table, tbody,th, td {
     width: 25%;
     text-align: left;
     vertical-align: top;
     border: 1px solid #000;
     border-collapse: collapse;
+}
+
+
+footer{
+    position:absolute;
+    height: 80px;
+    width: 100%;
+    bottom:0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color:cornflowerblue;
+    color: white;
+}
+
+footer a{
+    color: white;
 }

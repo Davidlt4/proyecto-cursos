@@ -12,7 +12,7 @@ class Pages{
         }
         require_once "../views/layout/header.php";
         require_once "../views/$pageName.php";
-        // require_once "views/layout/footer.php";
+        require_once "../views/layout/footer.php";
     }
 }
 ?>

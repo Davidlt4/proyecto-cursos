@@ -8,18 +8,20 @@
 </head>
 <body>
 
-    <form method="POST" action="">
+    <fieldset>
+        <legend><h2>Login</h2></legend>
+        <form method="POST" action="">
 
-        <label>Email: </label>
-        <input type="email" name="email"><br><br>
+            <label>Email: </label>
+            <input type="email" name="email"><br><br>
 
-        <label>Contraseña: </label>
-        <input type="password" name="password"><br><br>
+            <label>Contraseña: </label>
+            <input type="password" name="password"><br><br>
 
-        <input type="submit">
+            <input type="submit">
 
-
-    </form>
+        </form>
+    </fieldset>
 
 </body>
 </html>

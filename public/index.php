@@ -36,8 +36,13 @@
     });
 
     //Ruta para actualizar ponente
-    Router::add('PUT','ponente/actualizar/:id',function(int $ponenteid){
-        (new ApiponenteController())->actualizaPonente($ponenteid);
+    Router::add('POST','ponente/actualizar/:id',function(int $ponenteid){
+        (new PonenteController())->actualizaPonente($ponenteid);
+    });
+
+    //Ruta para actualizar ponente
+    Router::add('GET','ponente/actualizar/:id',function(int $ponenteid){
+        (new PonenteController())->actualizaPonente($ponenteid);
     });
     
     //Ruta para borrar ponente

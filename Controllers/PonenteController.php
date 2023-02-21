@@ -30,6 +30,20 @@
             $this->pages->render("ponente/crear");
         }
 
+        public function actualizaPonente($ponenteid){
+
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                $datos=json_encode($_POST['data']);
+                $this->api->actualizaPonente($ponenteid,$datos);
+            }else{
+                $ponente=$this->api->getPonente($ponenteid);
+                $ponente=json_decode($ponente);
+                $this->pages->render("ponente/actualizar",['ponente'=>$ponente->Ponentes[0]]);
+            }
+
+            
+        }
+
 
     }
 

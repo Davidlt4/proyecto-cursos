@@ -117,7 +117,7 @@ use Models\Usuario;
             }else{
                 $result = json_encode($PonenteArr);
             }
-            $this -> pages -> render('read',['result' => $result]);
+            return $result;
         }
 
 
@@ -160,16 +160,16 @@ use Models\Usuario;
 
         }
 
-        public function actualizaPonente($ponenteid): void{
+        public function actualizaPonente($ponenteid,$ponente_datos): void{
 
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             $datos_ponente = $this->ponente->findOne($ponenteid);
 
             if ($datos_ponente !== false) {
 
                 $ponente = Ponente::fromArray($datos_ponente);
-                $datos = json_decode(file_get_contents("php://input"));
+                $datos = json_decode($ponente_datos);
 
                 if ($ponente->validarDatos($datos)){
         
@@ -203,7 +203,7 @@ use Models\Usuario;
             $result = json_decode(ResponseHttp::statusMessage(400, "Método no permitido, se debe usar PUT"));
         }
 
-        $this->pages->render('read', ['result' => json_encode($result)]);
+        header('Location:'.$_ENV['BASE_URL'].'ponentes');
     }
 
     public function borrarPonente($ponenteid){
@@ -223,7 +223,7 @@ use Models\Usuario;
         }
 
         header('Location:'.$_ENV['BASE_URL'].'ponentes');
-        
+
     }
 
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos cursos</title>
     <link rel="stylesheet" href="../../src/estilos.css">
+    <link rel="stylesheet" href="../../../src/estilos.css">
 </head>
 <body>
     <header>
