@@ -24,7 +24,8 @@
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 $datos=json_encode($_POST['data']);
-                $this->api->crearPonente($datos);
+                $result=$this->api->crearPonente($datos);
+                $this->pages->render("ponente/crear",['mensaje'=>$result->message]);
             }
 
             $this->pages->render("ponente/crear");

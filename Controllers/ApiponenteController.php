@@ -129,7 +129,7 @@ use Models\Usuario;
                 $datos_ponente=json_decode($ponente_datos);
                 
 
-                if($ponente->validarDatos($datos_ponente)){
+                if(gettype($ponente->validarDatos($datos_ponente))=="boolean"){
 
                     $ponente->setNombre($datos_ponente->nombre);
                     $ponente->setApellidos($datos_ponente->apellidos);
@@ -147,7 +147,7 @@ use Models\Usuario;
 
                 }else{
                     http_response_code(404);
-                    $result=json_decode(ResponseHttp::statusMessage(404,"Error al validar los datos"));
+                    $result=json_decode(ResponseHttp::statusMessage(404,$ponente->validarDatos($datos_ponente)));
                 }
 
 
@@ -160,7 +160,7 @@ use Models\Usuario;
 
         }
 
-        public function actualizaPonente($ponenteid,$ponente_datos): void{
+        public function actualizaPonente($ponenteid,$ponente_datos) {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -171,7 +171,7 @@ use Models\Usuario;
                 $ponente = Ponente::fromArray($datos_ponente);
                 $datos = json_decode($ponente_datos);
 
-                if ($ponente->validarDatos($datos)){
+                if (gettype($ponente->validarDatos($datos))=="boolean"){
         
                     //reescribimos los datos del ponente
                     $ponente->setNombre($datos->nombre);
@@ -191,7 +191,7 @@ use Models\Usuario;
                 }
                 else {
                     http_response_code(400);
-                    $result = json_decode(ResponseHttp::statusMessage(400, "Algo ha salido mal"));
+                    $result = json_decode(ResponseHttp::statusMessage(400,$ponente->validarDatos($datos)));
                 }
             }
             else {
@@ -199,11 +199,8 @@ use Models\Usuario;
                 $result = json_decode(ResponseHttp::statusMessage(404, "No ha encontrado el ponente"));
             }
         }
-        else {
-            $result = json_decode(ResponseHttp::statusMessage(400, "Método no permitido, se debe usar PUT"));
-        }
 
-        header('Location:'.$_ENV['BASE_URL'].'ponentes');
+        return $result;
     }
 
     public function borrarPonente($ponenteid){

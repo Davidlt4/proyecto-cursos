@@ -165,12 +165,49 @@
                 }
             }
 
-            public function validarDatos($datos_ponente):bool{
+            public function validarCampos($datos_ponente):string|bool{
+
+                $nombreval = "/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/";
+
+                $tagval = "/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/";
+
+                $imgval = "/^.*\.(jpg|png|jpeg)$/";
+
+                if(!preg_match($nombreval, $datos_ponente -> nombre)){
+
+                    return "El nombre solo puede contener letras y espacios";
+
+                }
+        
+                if(!preg_match($nombreval, $datos_ponente -> apellidos)){
+                    return "El apellido solo puede contener letras y espacios";
+                }
+
+                if(!preg_match($imgval, $datos_ponente -> imagen)){
+                    return "La imagen debe tener alguno de los siguientes formatos: nombreimagen.jpg/png/jpeg";
+                }
+
+                if(!preg_match($tagval,$datos_ponente -> tags)){
+                    return "Los tags solo pueden contener letras";
+                }
+
+                return true;
+                
+            }
+
+            public function validarDatos($datos_ponente):bool|string{
 
                 if(!empty($datos_ponente->nombre) && !empty($datos_ponente->apellidos) && !empty($datos_ponente->imagen) && !empty($datos_ponente->tags) && !empty($datos_ponente->redes)){
-                    return true;
+                    $result=$this->validarCampos($datos_ponente);
+        
+                    if(gettype($result)=="boolean"){
+                        return true;
+                    }else{
+                        return $result;
+                    }
+                    
                 }else{
-                    return false;
+                    return "Rellena todos los campos";
                 }
 
             }
