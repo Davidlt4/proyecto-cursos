@@ -10,7 +10,7 @@ class Pages{
                 $$name = $value;
             }
         }
-        // require_once "views/layout/header.php";
+        require_once "../views/layout/header.php";
         require_once "../views/$pageName.php";
         // require_once "views/layout/footer.php";
     }

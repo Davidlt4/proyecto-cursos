@@ -20,6 +20,16 @@
             $this->pages->render('ponente/mostrarPonentes',['ponentes'=>$ponentes->Ponentes]);
         }
 
+        public function crearPonente(){
+
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                $datos=json_encode($_POST['data']);
+                $this->api->crearPonente($datos);
+            }
+
+            $this->pages->render("ponente/crear");
+        }
+
 
     }
 

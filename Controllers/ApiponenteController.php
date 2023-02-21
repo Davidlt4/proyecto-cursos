@@ -121,12 +121,12 @@ use Models\Usuario;
         }
 
 
-        public function crearPonente(){
+        public function crearPonente($ponente_datos){
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $ponente=new Ponente();
-                $datos_ponente=json_decode(file_get_contents("php://input"));
+                $datos_ponente=json_decode($ponente_datos);
                 
 
                 if($ponente->validarDatos($datos_ponente)){
@@ -156,7 +156,7 @@ use Models\Usuario;
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser POST"));
             }
 
-            $this->pages->render("read",['result'=> json_encode($result)]);
+            return $result;
 
         }
 
@@ -222,7 +222,8 @@ use Models\Usuario;
 
         }
 
-        $this->pages->render("read",['result'=> json_encode($result)]);
+        header('Location:'.$_ENV['BASE_URL'].'ponentes');
+        
     }
 
 

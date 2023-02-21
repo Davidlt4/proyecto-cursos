@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="../src/estilos.css">
 <?php
 
     require_once __DIR__.'../../vendor/autoload.php';
@@ -6,7 +7,6 @@
     use Controllers\ApiponenteController;
     use Controllers\NorUsuarioController;
     use Controllers\PonenteController;
-    use Controllers\UsuarioController;
 
 
     $dotenv = Dotenv::createImmutable(__DIR__);
@@ -28,7 +28,11 @@
 
     //Ruta para crear ponente
     Router::add('POST','ponente/crear',function(){
-        (new ApiponenteController())->crearPonente();
+        (new PonenteController())->crearPonente();
+    });
+
+    Router::add('GET','ponente/crear',function(){
+        (new PonenteController())->crearPonente();
     });
 
     //Ruta para actualizar ponente
