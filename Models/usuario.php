@@ -148,7 +148,7 @@ use Lib\Security;
         public function validaCampos($usuario_datos):bool|string{
 
             if(!preg_match("/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/",$usuario_datos->email)){
-                return "Correo no válido";
+                return "Correo no valido";
             }
             if(!preg_match("/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]{3,16}$/",$usuario_datos->nombre)){
                 return "Solo pueden introducirse letras y espacios para el nombre";
@@ -159,7 +159,7 @@ use Lib\Security;
             if(!preg_match("/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,14}$/",$usuario_datos->password)){
                 return "La contrasena debe medir entre 6 y 14 caracteres, al menos tener un numero, al menos una minuscula y al menos una mayuscula";
             }
-            
+
             return true;
         }
 
@@ -178,7 +178,7 @@ use Lib\Security;
                     return $valida_campo;
                 }
             }else{
-                return "Rellena todo los campos: nombre,apellidos,email,password,rol y confirmado";
+                return "Rellena todo los campos: nombre,apellidos,email y password";
             }
 
             return true;
