@@ -33,9 +33,14 @@
 
         public function actualizaPonente($ponenteid){
 
+            
+
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 $datos=json_encode($_POST['data']);
-                $this->api->actualizaPonente($ponenteid,$datos);
+                $result=$this->api->actualizaPonente($ponenteid,$datos);
+                $ponente=$this->api->getPonente($ponenteid);
+                $ponente=json_decode($ponente);
+                $this->pages->render("ponente/actualizar",['ponente'=>$ponente->Ponentes[0],'mensaje'=>$result->message]);
             }else{
                 $ponente=$this->api->getPonente($ponenteid);
                 $ponente=json_decode($ponente);
