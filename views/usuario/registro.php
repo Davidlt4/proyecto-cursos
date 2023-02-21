@@ -27,5 +27,8 @@
 
         </form>
    </fieldset>
+   <span class="mensaje"><?php if(isset($mensaje)){
+        echo $mensaje;
+    }?></span>
 </body>
 </html>

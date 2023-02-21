@@ -30,7 +30,8 @@
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 $datos=json_encode($_POST['data']);
-                $this->api->registrarUsuario($datos);
+                $result=$this->api->registrarUsuario($datos);
+                $this->pages->render("usuario/registro",["mensaje"=>$result->message]);
             }
 
             $this->pages->render("usuario/registro");

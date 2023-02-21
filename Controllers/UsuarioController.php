@@ -59,7 +59,7 @@
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser POST"));
             }
 
-            $this->pages->render("read",['result'=> json_encode($result)]);
+            return $result;
 
         }
 
