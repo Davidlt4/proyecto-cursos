@@ -70,13 +70,15 @@ table tbody{
     font-weight: bold;
 }
 
-table, tbody,th, td {
+table,tbody,th,td {
     width: 25%;
     text-align: left;
     vertical-align: top;
     border: 1px solid #000;
     border-collapse: collapse;
+    padding: 10px;
 }
+
 
 .mensaje{
     color: red;

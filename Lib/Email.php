@@ -23,20 +23,19 @@
 
             $mail->SMTPAuth=true;
             $mail->Port=2525;
-            $mail->Username='correotiendazapatos@gmail.com';
-            $mail->Password='pqgbnqrzmdnunfgt';
+            $mail->Username = '0a7f39ce019980';
+            $mail->Password = '96f56b7af7ac7d';
 
-
-            $mail->setFrom('correotiendazapatos@gmail.com','Proyecto-cursos');
+            $mail->setFrom('proyectos-cursos@gmail.com','Proyecto-cursos');
             $mail->addAddress($this->email);
-            $mail->addAddress('correotiendazapatos@gmail.com');
+            $mail->addAddress("lopez21tap@gmail.com");
 
             $mail->isHTML(TRUE);
             $mail->CharSet="UTF-8";
 
             $contenido="<html>";
             $contenido.="<p><strong>Hola ".$this->email."</strong> Has creado tu cuenta en Proyecto-cursos, solo debes confirmarla presionando el siguiente enlace</p>";
-            $contenido.="<p>Presiona aquí: <a href='http://localhost/proyecto-cursos/public/confirmar-cuenta/".$this->token."'>Confirmar Cuenta</a></p>";
+            $contenido.="<p>Presiona aquí: <a href='http://localhost/proyecto-cursos/public/usuario/login'>Confirmar Cuenta</a></p>";
             $contenido.="</html>";
 
             $mail->Body=$contenido;

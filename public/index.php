@@ -33,22 +33,38 @@
     });
 
     Router::add('GET','ponente/crear',function(){
-        (new PonenteController())->crearPonente();
+        if(isset($_SESSION['usuario'])){
+            (new PonenteController())->crearPonente();
+        }else{
+            header('Location:'.$_ENV['BASE_URL'].'usuario/login');
+        }
     });
 
     //Ruta para actualizar ponente
     Router::add('POST','ponente/actualizar/:id',function(int $ponenteid){
-        (new PonenteController())->actualizaPonente($ponenteid);
+        (new PonenteController())->actualizaPonente($ponenteid);   
     });
 
     //Ruta para actualizar ponente
     Router::add('GET','ponente/actualizar/:id',function(int $ponenteid){
-        (new PonenteController())->actualizaPonente($ponenteid);
+
+        if(isset($_SESSION['usuario'])){
+            (new PonenteController())->actualizaPonente($ponenteid);
+        }else{
+            header('Location:'.$_ENV['BASE_URL'].'usuario/login');
+        }
+
     });
     
     //Ruta para borrar ponente
     Router::add('GET','ponente/borrar/:id',function(int $ponenteid){
-        (new ApiponenteController())->borrarPonente($ponenteid);
+
+        if(isset($_SESSION['usuario'])){
+            (new ApiponenteController())->borrarPonente($ponenteid);
+        }else{
+            header('Location:'.$_ENV['BASE_URL'].'usuario/login');
+        }
+        
     });
 
     //Ruta para registrar usuario
