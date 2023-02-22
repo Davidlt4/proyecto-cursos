@@ -13,15 +13,19 @@
         <form method="POST" action="">
 
             <label>Email: </label>
-            <input type="email" name="email"><br><br>
+            <input type="email" name="data[email]"><br><br>
 
             <label>Contraseña: </label>
-            <input type="password" name="password"><br><br>
+            <input type="password" name="data[password]"><br><br>
 
             <input type="submit">
 
         </form>
     </fieldset>
+
+    <span class="mensaje"><?php if(isset($mensaje)){
+        echo $mensaje;
+    }?></span>
 
 </body>
 </html>

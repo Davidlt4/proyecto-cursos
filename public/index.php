@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="../src/estilos.css">
 <?php
 
+    session_start();
     require_once __DIR__.'../../vendor/autoload.php';
     use Dotenv\Dotenv;
     use Lib\Router;
@@ -64,8 +65,18 @@
         (new NorUsuarioController())->login();
     });
 
-    Router::add('GET','/',function(){
+    //Ruta para logear usuario
+    Router::add('GET','usuario/login',function(){
         (new NorUsuarioController())->login();
+    });
+
+    //Ruta para cerrar sesión del usuario
+    Router::add('GET','usuario/logout',function(){
+        (new NorUsuarioController())->logout();
+    });
+
+    Router::add('GET','/',function(){
+        (new PonenteController())->mostrar();
     });
 
     Router::add('GET','ponentes',function(){

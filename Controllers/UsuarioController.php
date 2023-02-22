@@ -68,6 +68,7 @@
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $usuario=new Usuario();
+                $usuario_datos=json_decode($usuario_datos);
         
                 if(gettype($usuario->validarDatosLogin($usuario_datos))=="boolean"){
 
@@ -76,7 +77,7 @@
                         $usuario->setEmail($usuario_datos->email);
                         $this->crearToken($usuario,$usuario_datos->email);
                         http_response_code(200);
-                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente, token:  ".$usuario->getToken()));
+                        $result=json_decode(ResponseHttp::statusMessage(200,"Usuario logeado correctamente"));
 
                     }else{
                         http_response_code(404);
@@ -94,7 +95,7 @@
                 $result=json_decode(ResponseHttp::statusMessage(404,"Error el método de recogida de datos debe de ser POST"));
             }
 
-            return json_encode($result);
+            return $result;
 
         }
 

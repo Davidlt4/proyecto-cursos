@@ -30,8 +30,10 @@
                 <td><?= $ponente->imagen?></td>
                 <td><?= $ponente->tags?></td>
                 <td><?= $ponente->redes?></td>
-                <td><a href="<?= $_ENV['BASE_URL']?>ponente/borrar/<?=$ponente->id?>">Borrar</a></td>
-                <td><a href="<?= $_ENV['BASE_URL']?>ponente/actualizar/<?= $ponente->id?>">Editar</a></td>
+                <?php if(isset($_SESSION['usuario'])):?>
+                    <td><a href="<?= $_ENV['BASE_URL']?>ponente/borrar/<?=$ponente->id?>">Borrar</a></td>
+                    <td><a href="<?= $_ENV['BASE_URL']?>ponente/actualizar/<?= $ponente->id?>">Editar</a></td>
+                <?php endif; ?>
             </tr>
 
         <?php endforeach ?>
