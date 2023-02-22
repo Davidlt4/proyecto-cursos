@@ -1,27 +1,28 @@
 <?php
 
 
+    //Api para Ponente
     namespace Controllers;
+
     use Models\Ponente;
     use Lib\ResponseHttp;
     use Lib\Pages;
     use Lib\Security;
-use Models\Usuario;
+    use Models\Usuario;
 
     class ApiponenteController{
 
-        private Pages $pages;
+        //Atributo privado ponente de clase Ponente
         private Ponente $ponente;
-        private Usuario $usuario;
 
-
+        //Constructor para ApiPonenteController, donde inicializamos ponente llamando al constructor de dicha clase
+        //para así poder llamar a los métodos de dicha clase cuando los necesitemos 
         public function __construct()
         {
             $this -> ponente = new Ponente();
-            $this -> pages = new Pages();
-            $this->usuario = new Usuario();
         }
 
+        //Autentificación por token(funciona utilizando POSTMAN o THUNDER CLIENT):
 
         /*public function getAll(){
 
@@ -64,15 +65,19 @@ use Models\Usuario;
             
         }*/
 
+
+        //Método que nos devuelve todos los ponentes
         public function getAll(){
 
             if($_SERVER['REQUEST_METHOD']=='GET'){ 
 
+                //Llamamos al método de obtener todos los ponentes del modelo Ponente
                 $ponentes = $this -> ponente->findAll();
                 $PonenteArr = [];
 
                 if(!empty($ponentes)){
 
+                    //Si hay ponentes, los guardamos en un array
                     $PonenteArr["message"] = json_decode(ResponseHttp::statusMessage(202,'OK'));
                     $PonenteArr["Ponentes"] = [];
                     foreach($ponentes as $fila){
@@ -98,6 +103,7 @@ use Models\Usuario;
             
         }
 
+        //Obtenemos un ponente a tráves de la id
         public function getPonente($ponenteid){
 
             $ponentes = $this -> ponente->findOne($ponenteid);
@@ -121,16 +127,20 @@ use Models\Usuario;
         }
 
 
+        //Crea un ponente a tráves de ponente_datos, dichos datos están dados en formato JSON
+        //Ponente_datos serán los datos que recogemos de la vista ponente/crear
         public function crearPonente($ponente_datos){
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
                 $ponente=new Ponente();
+                //Descodificamos los datos
                 $datos_ponente=json_decode($ponente_datos);
                 
 
                 if(gettype($ponente->validarDatos($datos_ponente))=="boolean"){
 
+                    //Establecemos las propiedades del ponente a través de los datos
                     $ponente->setNombre($datos_ponente->nombre);
                     $ponente->setApellidos($datos_ponente->apellidos);
                     $ponente->setImagen($datos_ponente->imagen);
@@ -160,6 +170,9 @@ use Models\Usuario;
 
         }
 
+        //Actualizamos el ponente cuyo id es ponenteid y cambiamos los datos de dicho ponente
+        //por los datos recogidos en la vista ponente/actualizar(ponente_datos) también dados en formato JSON
+
         public function actualizaPonente($ponenteid,$ponente_datos) {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -173,7 +186,7 @@ use Models\Usuario;
 
                 if (gettype($ponente->validarDatos($datos))=="boolean"){
         
-                    //reescribimos los datos del ponente
+                    //Reescribimos los datos del ponente
                     $ponente->setNombre($datos->nombre);
                     $ponente->setApellidos($datos->apellidos);
                     $ponente->setImagen($datos->imagen);
@@ -203,6 +216,7 @@ use Models\Usuario;
         return $result;
     }
 
+    //Borramos un ponente a través de su id
     public function borrarPonente($ponenteid){
 
         if($_SERVER['REQUEST_METHOD']=='GET'){
