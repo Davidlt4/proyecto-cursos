@@ -30,9 +30,24 @@ Comentarios adecuados
 Publica tu proyecto en Git. (usa gitignore)
 Investiga sobre la necesidad del fichero procfile ( por ejemplo para decir que tu proyecto se inicia desde la carpeta public)
 Sube tu proyecto a un hosting 
-Para subir nota.
+
+Para subir nota:
 
 Autenticación por token , además de email y password
 Obtener información de una aplicación externa y usar esos datos en la nuestra
 Crea tu propia API
 Usa JSON
+
+//Lo que hace mi Aplicacion
+
+-Login y registro
+-Ponentes: 
+    Si estas logeado:
+          -Crear
+          -Borrar
+          -Actualizar
+    No estando logeado:
+          -MotrarPonentes
+          
+ -Todo lo anterior realizado mediante el uso de API y json
+ 
