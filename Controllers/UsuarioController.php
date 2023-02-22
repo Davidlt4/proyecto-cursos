@@ -6,6 +6,7 @@
     use Models\Usuario;
     use Lib\ResponseHttp;
     use Lib\Pages;
+    use Lib\Email;
     use Lib\Security;
     use Firebase\JWT\JWT;
 
@@ -13,12 +14,14 @@
 
         private Pages $pages;
         private Usuario $usuario;
+        private Email $host_email;
 
 
         public function __construct()
         {
             $this -> usuario = new Usuario();
             $this -> pages = new Pages();
+            $this -> host_email = new Email();
         }
 
         public function registrarUsuario($usuario_datos){
@@ -41,6 +44,7 @@
                     $usuario->setConfirmado("no");
 
                     if($usuario->registra()){
+                        $this->host_email->enviarConfirmacion($usuario->getEmail());
                         http_response_code(200);
                         $result=json_decode(ResponseHttp::statusMessage(200,"Usuario creado correctamente"));
                     }else{
