@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="../src/estilos.css">
 <?php
 
+    //Iniciamos las sesiones
     session_start();
     require_once __DIR__.'../../vendor/autoload.php';
     use Dotenv\Dotenv;
@@ -23,15 +24,18 @@
         (new ApiponenteController()) -> getAll();
     });*/
 
+    //Ruta para ver un ponente
+
     Router::add('GET','ponente/:id',function(int $ponenteid){
          (new ApiponenteController()) -> getPonente($ponenteid);
     });
 
-    //Ruta para crear ponente
+    //Ruta para crear ponente a tráves de POST
     Router::add('POST','ponente/crear',function(){
         (new PonenteController())->crearPonente();
     });
 
+    //Ruta para cargar la vista crear ponente
     Router::add('GET','ponente/crear',function(){
         if(isset($_SESSION['usuario'])){
             (new PonenteController())->crearPonente();
@@ -45,7 +49,7 @@
         (new PonenteController())->actualizaPonente($ponenteid);   
     });
 
-    //Ruta para actualizar ponente
+    //Ruta para cargar la vista actualizar ponente
     Router::add('GET','ponente/actualizar/:id',function(int $ponenteid){
 
         if(isset($_SESSION['usuario'])){
@@ -64,24 +68,25 @@
         }else{
             header('Location:'.$_ENV['BASE_URL'].'usuario/login');
         }
-        
+
     });
 
-    //Ruta para registrar usuario
+    //Ruta para registrar usuario a tráves de POST
     Router::add('POST','usuario/registro',function(){
         (new NorUsuarioController())->registro();
     });
 
+    //Ruta para cargar la vista de usuario registro
     Router::add('GET','usuario/registro',function(){
         (new NorUsuarioController())->registro();
     });
 
-    //Ruta para logear usuario
+    //Ruta para logear a un usuario
     Router::add('POST','usuario/login',function(){
         (new NorUsuarioController())->login();
     });
 
-    //Ruta para logear usuario
+    //Ruta para cargar la vista usuario login
     Router::add('GET','usuario/login',function(){
         (new NorUsuarioController())->login();
     });
@@ -91,10 +96,12 @@
         (new NorUsuarioController())->logout();
     });
 
+    //Ruta raíz donde se muestran los ponentes
     Router::add('GET','/',function(){
         (new PonenteController())->mostrar();
     });
 
+    //Ruta para mostrar los ponentes
     Router::add('GET','ponentes',function(){
         (new PonenteController())->mostrar();
     });

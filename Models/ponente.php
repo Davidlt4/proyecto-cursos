@@ -1,4 +1,6 @@
 <?php
+
+    //Modelo Ponente
     namespace Models;
 
     use Exception;
@@ -8,7 +10,8 @@
 
 
     class Ponente{
-        
+
+            //Atributos de Ponentes
             private string $id;
             private string $nombre;
             private string $apellidos;
@@ -20,6 +23,7 @@
 
             public function __construct()
             {
+                //Iniciamos la conexion a la base de datos
                 $this -> conexion = new BaseDatos();
             }
 
@@ -143,6 +147,7 @@
                         return $this;
             }
 
+            //Sacamos todos los ponentes de la base de datos
             public function findAll(){
                 $statement = "SELECT * FROM ponentes;";
 
@@ -154,6 +159,7 @@
                 }
             }
 
+            //Sacamos el ponente a tráves de la id
             public function findOne($id){
                 $statement = "SELECT * FROM ponentes WHERE id=$id;";
 
@@ -165,18 +171,20 @@
                 }
             }
 
+            //Función auxiliar par validar los Campos pasados como parámetros
             public function validarCampos($datos_ponente):string|bool{
 
+                //Para validar nombre y apellidos
                 $nombreval = "/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/";
 
+                //Para validar los tags
                 $tagval = "/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/";
 
+                //Válidar la imagen
                 $imgval = "/^.*\.(jpg|png|jpeg)$/";
 
                 if(!preg_match($nombreval, $datos_ponente -> nombre)){
-
                     return "El nombre solo puede contener letras y espacios";
-
                 }
         
                 if(!preg_match($nombreval, $datos_ponente -> apellidos)){
@@ -195,6 +203,9 @@
                 
             }
 
+            //Validamos que todos los campos estén completos y sean correctos, si lo son devolvemos true, si no devolvemos un mensaje
+            //Indicando donde está el fallo
+
             public function validarDatos($datos_ponente):bool|string{
 
                 if(!empty($datos_ponente->nombre) && !empty($datos_ponente->apellidos) && !empty($datos_ponente->imagen) && !empty($datos_ponente->tags) && !empty($datos_ponente->redes)){
@@ -212,6 +223,7 @@
 
             }
 
+            //Función para añadir un ponente a la base de datos
             public function crear(){
 
                 $statement = $this -> conexion->prepara("INSERT INTO ponentes(nombre,apellidos,imagen,tags,redes) VALUES (:nombre,:apellidos,:imagen,:tags,:redes)");
@@ -231,7 +243,7 @@
                 }
             }
 
-
+            //Función para actualizar el ponente con los datos pasados como parámetro
             public function actualiza($ponenteid):bool{
             
                 $statement = $this -> conexion->prepara("UPDATE ponentes SET nombre=:nombre,apellidos=:apellidos,imagen=:imagen,tags=:tags,redes=:redes WHERE id=:id");
@@ -256,6 +268,7 @@
             }
 
 
+            //Borramos ponente de la base de datos a tráves de la id
             public function borrar($id){
                 $statement = $this -> conexion->prepara("DELETE FROM ponentes WHERE id = :id");
                 $statement->bindParam(":id",$id);
@@ -268,7 +281,7 @@
                 }
             }
 
-
+            //Transformamos un array en un objeto Ponente
             public static function fromArray($datos){
 
                 $ponente=new Ponente();
