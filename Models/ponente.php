@@ -172,7 +172,7 @@
             }
 
             //Función auxiliar par validar los Campos pasados como parámetros
-            public function validarCampos($datos_ponente):string|bool{
+            public function validarCampos($datos_ponente,$imagen):string|bool{
 
                 //Para validar nombre y apellidos
                 $nombreval = "/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/";
@@ -191,7 +191,7 @@
                     return "El apellido solo puede contener letras y espacios";
                 }
 
-                if(!preg_match($imgval, $datos_ponente -> imagen)){
+                if(!preg_match($imgval,$imagen)){
                     return "La imagen debe tener alguno de los siguientes formatos: nombreimagen.jpg/png/jpeg";
                 }
 
@@ -206,10 +206,10 @@
             //Validamos que todos los campos estén completos y sean correctos, si lo son devolvemos true, si no devolvemos un mensaje
             //Indicando donde está el fallo
 
-            public function validarDatos($datos_ponente):bool|string{
+            public function validarDatos($datos_ponente,$imagen):bool|string{
 
-                if(!empty($datos_ponente->nombre) && !empty($datos_ponente->apellidos) && !empty($datos_ponente->imagen) && !empty($datos_ponente->tags) && !empty($datos_ponente->redes)){
-                    $result=$this->validarCampos($datos_ponente);
+                if(!empty($datos_ponente->nombre) && !empty($datos_ponente->apellidos) && !empty($datos_ponente->tags) && !empty($datos_ponente->redes)){
+                    $result=$this->validarCampos($datos_ponente,$imagen);
         
                     if(gettype($result)=="boolean"){
                         return true;

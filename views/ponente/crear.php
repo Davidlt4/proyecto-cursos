@@ -10,7 +10,7 @@
     <fieldset>
 
         <legend><h2>Crear Ponente</h2></legend>
-        <form action="<?=$_ENV['BASE_URL']?>ponente/crear" method="POST">
+        <form action="<?=$_ENV['BASE_URL']?>ponente/crear" method="POST" enctype="multipart/form-data">
 
             <label>Nombre: </label>
             <input type="text" name="data[nombre]"><br><br>
@@ -19,7 +19,7 @@
             <input type="text" name="data[apellidos]"><br><br>
 
             <label>Imagen: </label>
-            <input type="text" name="data[imagen]"><br><br>
+            <input type="file" name="imagen" accept="image/*"><br><br>
 
             <label>Tags: </label>
             <input type="text" name="data[tags]"><br><br>

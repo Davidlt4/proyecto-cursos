@@ -129,7 +129,7 @@
 
         //Crea un ponente a tráves de ponente_datos, dichos datos están dados en formato JSON
         //Ponente_datos serán los datos que recogemos de la vista ponente/crear
-        public function crearPonente($ponente_datos){
+        public function crearPonente($ponente_datos,$imagen){
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -138,12 +138,12 @@
                 $datos_ponente=json_decode($ponente_datos);
                 
 
-                if(gettype($ponente->validarDatos($datos_ponente))=="boolean"){
+                if(gettype($ponente->validarDatos($datos_ponente,$imagen))=="boolean"){
 
                     //Establecemos las propiedades del ponente a través de los datos
                     $ponente->setNombre($datos_ponente->nombre);
                     $ponente->setApellidos($datos_ponente->apellidos);
-                    $ponente->setImagen($datos_ponente->imagen);
+                    $ponente->setImagen($imagen);
                     $ponente->setTags($datos_ponente->tags);
                     $ponente->setRedes($datos_ponente->redes);
 
@@ -157,7 +157,7 @@
 
                 }else{
                     http_response_code(404);
-                    $result=json_decode(ResponseHttp::statusMessage(404,$ponente->validarDatos($datos_ponente)));
+                    $result=json_decode(ResponseHttp::statusMessage(404,$ponente->validarDatos($datos_ponente,$imagen)));
                 }
 
 
@@ -173,7 +173,7 @@
         //Actualizamos el ponente cuyo id es ponenteid y cambiamos los datos de dicho ponente
         //por los datos recogidos en la vista ponente/actualizar(ponente_datos) también dados en formato JSON
 
-        public function actualizaPonente($ponenteid,$ponente_datos) {
+        public function actualizaPonente($ponenteid,$ponente_datos,$imagen) {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -184,12 +184,16 @@
                 $ponente = Ponente::fromArray($datos_ponente);
                 $datos = json_decode($ponente_datos);
 
-                if (gettype($ponente->validarDatos($datos))=="boolean"){
+                if(empty($imagen)){
+                    $imagen=$ponente->getImagen();
+                }
+
+                if (gettype($ponente->validarDatos($datos,$imagen))=="boolean"){
         
                     //Reescribimos los datos del ponente
                     $ponente->setNombre($datos->nombre);
                     $ponente->setApellidos($datos->apellidos);
-                    $ponente->setImagen($datos->imagen);
+                    $ponente->setImagen($imagen);
                     $ponente->setTags($datos->tags);
                     $ponente->setRedes($datos->redes);
 
@@ -204,7 +208,7 @@
                 }
                 else {
                     http_response_code(400);
-                    $result = json_decode(ResponseHttp::statusMessage(400,$ponente->validarDatos($datos)));
+                    $result = json_decode(ResponseHttp::statusMessage(400,$ponente->validarDatos($datos,$imagen)));
                 }
             }
             else {

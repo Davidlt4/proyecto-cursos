@@ -27,7 +27,7 @@
                 <td><?= $ponente->id ?></td>
                 <td><?= $ponente->nombre ?></td>
                 <td><?= $ponente->apellidos?></td>
-                <td><?= $ponente->imagen?></td>
+                <td><img width="40px" height="40px" src="img/<?=$ponente->imagen?>"></td>
                 <td><?= $ponente->tags?></td>
                 <td><?= $ponente->redes?></td>
                 <?php if(isset($_SESSION['usuario'])):?>

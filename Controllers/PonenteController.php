@@ -32,9 +32,24 @@
             //Si la petición se realiza por POST
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 //Recogemos los datos y los codificamos para pasarlos a la api
-                $datos=json_encode($_POST['data']);
+                $data=$_POST['data'];
+                $foto=$_FILES['imagen'];
+                $nombre=$foto['name'];
+                $tipo=$foto['type'];
+
+                if(($tipo=="image/jpg" || $tipo=="image/jpeg" || $tipo=="image/jpg" || $tipo=="image/png")){
+
+                    if(!is_dir('img')){
+                        mkdir('img',0777);
+                    }
+    
+                    move_uploaded_file($foto['tmp_name'],'img/'.$nombre);
+    
+                }
+
+                $datos=json_encode($data);
                 //Enviamos los datos a la api para crear el ponente
-                $result=$this->api->crearPonente($datos);
+                $result=$this->api->crearPonente($datos,$nombre);
                 $this->pages->render("ponente/crear",['mensaje'=>$result->message]);
             }
 
@@ -49,8 +64,23 @@
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 //Recogemos los datos y los codificamos para pasarlos a la api
                 $datos=json_encode($_POST['data']);
+
+                $foto=$_FILES['imagen'];
+                $nombre=$foto['name'];
+                $tipo=$foto['type'];
+
+                if(($tipo=="image/jpg" || $tipo=="image/jpeg" || $tipo=="image/jpg" || $tipo=="image/png")){
+
+                    if(!is_dir('img')){
+                        mkdir('img',0777);
+                    }
+    
+                    move_uploaded_file($foto['tmp_name'],'img/'.$nombre);
+    
+                }
+
                 //Actualizamos los datos del ponente con los nuevos datos recogidos desde la vista
-                $result=$this->api->actualizaPonente($ponenteid,$datos);
+                $result=$this->api->actualizaPonente($ponenteid,$datos,$nombre);
                 //Buscamos el ponente y mostramos los datos para poder modificarlo a tráves de estos
                 $ponente=$this->api->getPonente($ponenteid);
                 $ponente=json_decode($ponente);
